@@ -1,3 +1,3 @@
-#Razvoj mobilnih aplikacija
+# Razvoj mobilnih aplikacija
 
-##Labosi
+## Labosi
