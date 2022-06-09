@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "328773515124",
+    "project_id": "comicly-ea43a",
+    "storage_bucket": "comicly-ea43a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328773515124:android:0d1aed949b17efcd925e21",
+        "android_client_info": {
+          "package_name": "com.example.comicly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328773515124-nila69c0fas5illd226os3s8945br42u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz_uhNLfPWgMlkQQF8GWoBxG0nRxBTzNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328773515124-nila69c0fas5illd226os3s8945br42u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

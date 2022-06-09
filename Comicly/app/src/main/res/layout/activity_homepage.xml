@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/comicInput"
+        android:layout_width="300dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Search for comics"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/searchComics"
+        android:layout_width="300dp"
+        android:layout_height="59dp"
+        android:backgroundTint="@color/black"
+        android:text="SEARCH"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:typeface="normal"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="105dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="301dp"
+        android:layout_height="497dp"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="200dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
