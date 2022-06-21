@@ -6,11 +6,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.comicly.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var firebaseAuth: FirebaseAuth
+
+    private var name = ""
+    private var email = ""
+    private var pass = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,20 +32,16 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.signUpBtn.setOnClickListener {
-            val email = binding.emailInput.text.toString()
-            val pass = binding.passInput.text.toString()
+            name = binding.nameInput.text.toString()
+            email = binding.emailInput.text.toString()
+            pass = binding.passInput.text.toString()
             val confirmPass = binding.passConfInput.text.toString()
 
             if (email.isNotEmpty() && pass.isNotEmpty() && confirmPass.isNotEmpty()) {
                 if (pass == confirmPass) {
 
-                    firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val intent = Intent(this, SignInActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
-                        }
+                    firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnSuccessListener {
+                        updateUserInfo()
                     }
 
                 } else {
@@ -47,6 +50,25 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Empty fields are not allowed!", Toast.LENGTH_SHORT).show()
             }
+        }
+
+    }
+
+    private fun updateUserInfo(){
+        val uid = firebaseAuth.uid
+
+        val hashMap: HashMap<String, Any?> = HashMap()
+        hashMap["uid"] = uid
+        hashMap["email"] = email
+        hashMap["name"] = name
+
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        ref.child(uid!!).setValue(hashMap).addOnSuccessListener {
+            Toast.makeText(this, "Account created...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }.addOnFailureListener{
+            Toast.makeText(this, "Failed saving user info", Toast.LENGTH_SHORT).show()
         }
     }
 }

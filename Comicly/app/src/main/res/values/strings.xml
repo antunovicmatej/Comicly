@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Comicly</string>
+    <string name="comicname">comicName</string>
 </resources>

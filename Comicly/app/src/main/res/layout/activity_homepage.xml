@@ -3,38 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/homeback">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comicsRv"
+        android:layout_width="367dp"
+        android:layout_height="506dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_field"
+        tools:listitem="@layout/layout_list"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <EditText
-        android:id="@+id/comicInput"
+        android:id="@+id/search_field"
         android:layout_width="300dp"
         android:layout_height="59dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Search for comics"
-        android:inputType="textPersonName"
+        android:hint="Search for comics..."
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <Button
-        android:id="@+id/searchComics"
-        android:layout_width="300dp"
-        android:layout_height="59dp"
-        android:backgroundTint="@color/black"
-        android:text="SEARCH"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        android:typeface="normal"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="105dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="301dp"
-        android:layout_height="497dp"
-        tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="200dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
