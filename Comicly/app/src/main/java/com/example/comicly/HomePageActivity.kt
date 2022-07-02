@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.comicly.databinding.ActivityHomepageBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.lang.Exception
 
@@ -23,20 +24,14 @@ class HomePageActivity : AppCompatActivity() {
     private lateinit var comicArrayList: ArrayList<Comic>
     private lateinit var adapterComicAdmin: AdapterComicAdmin
 
+    private lateinit var auth: FirebaseAuth
+
     lateinit var recyclerView : RecyclerView
     lateinit var manager: LinearLayoutManager
 
     private companion object{
         const val TAG = "COMIC_LIST_ADMIN_TAG"
     }
-
-    /*
-    lateinit var databaseReference : DatabaseReference
-    lateinit var searchView : EditText
-    val arrayList = ArrayList<String>()
-    lateinit var arrayAdapter: ArrayAdapter<String>
-    lateinit var builder : AlertDialog.Builder
-    */
 
     lateinit var arrowIcon : ImageView
     lateinit var profileIcon : ImageView
@@ -51,7 +46,6 @@ class HomePageActivity : AppCompatActivity() {
         profileIcon = findViewById(R.id.profileIcon)
         barTitle = findViewById(R.id.barTitle)
 
-
         arrowIcon.setOnClickListener{
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
@@ -61,17 +55,6 @@ class HomePageActivity : AppCompatActivity() {
             val intent = Intent(this, ProfilePageActivity::class.java)
             startActivity(intent)
         }
-
-        /*
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("comics")
-        databaseReference.orderByChild("name")
-        listView = findViewById(R.id.comicsRv)
-        searchView = findViewById(R.id.search_field)
-        arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList)
-        listView.adapter = arrayAdapter
-
-        */
 
         loadComicList()
 
@@ -116,7 +99,7 @@ class HomePageActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
         })

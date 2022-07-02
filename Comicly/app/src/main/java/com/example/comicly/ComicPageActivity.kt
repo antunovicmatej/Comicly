@@ -22,12 +22,13 @@ class ComicPageActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityComicpageBinding
 
-    lateinit var hashMap : HashMap<String, String>
-
     lateinit var arrowIcon3 : ImageView
     lateinit var favBtn : Button
+    lateinit var readBtn : Button
 
     var uid = ""
+
+    private var isInMyFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class ComicPageActivity : AppCompatActivity(){
         uid = intent.getStringExtra("uid")!!
 
         favBtn = findViewById(R.id.favouriteBtn)
+        readBtn = findViewById(R.id.readBtn)
         arrowIcon3 = findViewById(R.id.arrowIcon3)
 
         arrowIcon3.setOnClickListener{
@@ -44,15 +46,30 @@ class ComicPageActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-
         loadComicDetails()
 
-        binding.favouriteBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                addToFavorite(this@ComicPageActivity, uid)
-            }
-        })
+        binding.favouriteBtn.setOnClickListener{
+            addToFavorite()
+        }
 
+        binding.readBtn.setOnClickListener{
+            addToRead()
+        }
+
+    }
+
+    private fun checkIsFavorite() {
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        ref!!.child(firebaseAuth.uid.toString()).child("favorites").child(uid)
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    isInMyFavorite = snapshot.exists()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
     }
 
     private fun loadComicDetails() {
@@ -61,10 +78,13 @@ class ComicPageActivity : AppCompatActivity(){
             override fun onDataChange(snapshot: DataSnapshot) {
                 val name = "${snapshot.child("name").value}"
                 val author = "${snapshot.child("author").value}"
+                val description = "${snapshot.child("description").value}"
                 val uid = "${snapshot.child("uid").value}"
+
 
                 binding.name.text = name
                 binding.author.text = author
+                binding.description.text = description
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -74,24 +94,51 @@ class ComicPageActivity : AppCompatActivity(){
         })
     }
 
-    fun addToFavorite(context : Context, comicId: String){
+    fun addToFavorite(){
         firebaseAuth = FirebaseAuth.getInstance()
-        var timestamp : Long = System.currentTimeMillis()
 
+        val hashMap = HashMap<String, Any>()
+        hashMap["uid"] = uid
 
-        hashMap.put("comicId", comicId)
+        hashMap.put("uid", uid)
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("comics")
-        databaseReference!!.child(firebaseAuth.uid.toString()).child("favorites").child(comicId)
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        ref!!.child(firebaseAuth.uid.toString()).child("favorites").child(uid)
             .setValue(hashMap)
-            .addOnSuccessListener (object : OnSuccessListener<Void>{
-                override fun onSuccess(s: Void?) {
-                }
+            .addOnSuccessListener {
+                Toast.makeText(this, "Added to favorite...", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener{
+                Toast.makeText(this, "Failed to add to favorite...", Toast.LENGTH_SHORT).show()
+            }
+    }
 
-            })
+    fun addToRead(){
+        firebaseAuth = FirebaseAuth.getInstance()
 
+        val hashMap = HashMap<String, Any>()
+        hashMap["uid"] = uid
 
+        hashMap.put("uid", uid)
 
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        ref!!.child(firebaseAuth.uid.toString()).child("read").child(uid)
+            .setValue(hashMap)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Added to read...", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener{
+                Toast.makeText(this, "Failed to add to read...", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    public fun removeFromFavorite(context: Context, uid: String){
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        ref!!.child(firebaseAuth.uid.toString()).child("favorites").child(uid)
+            .removeValue().addOnSuccessListener {
+                Toast.makeText(this, "Removed from favorite...", Toast.LENGTH_SHORT).show()
+
+            }.addOnFailureListener{
+                Toast.makeText(this, "Failed to remove from favorite...", Toast.LENGTH_SHORT).show()
+            }
     }
 
 }

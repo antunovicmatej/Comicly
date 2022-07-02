@@ -10,17 +10,6 @@
         android:id="@+id/include"
         layout="@layout/toolbar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comicsRv"
-        android:layout_width="367dp"
-        android:layout_height="506dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_field"
-        tools:listitem="@layout/layout_list"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
     <EditText
         android:id="@+id/search_field"
         android:layout_width="300dp"
@@ -35,5 +24,17 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comicsRv"
+        android:layout_width="376dp"
+        android:layout_height="549dp"
+        android:layout_marginTop="40dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_field"
+        tools:listitem="@layout/layout_list" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

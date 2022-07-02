@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:onClick="takePhoto"
             android:src="@drawable/ic_baseline_photo_camera_24"/>
     </RelativeLayout>
 </RelativeLayout>
