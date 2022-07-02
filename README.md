@@ -1,3 +1,3 @@
 # Razvoj mobilnih aplikacija
 
-## Labosi
+## Comicly app
